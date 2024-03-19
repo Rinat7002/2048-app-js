@@ -71,9 +71,8 @@ document.addEventListener('touchstart', function(event) {
 });
 
 document.addEventListener('touchmove', function(event) {
-    // Отменяем стандартное действие браузера, чтобы страница не прокручивалась
-    event.preventDefault();
-});
+    event.preventDefault(); // Предотвращаем стандартное поведение прокрутки при свайпе
+}, { passive: false });
 
 document.addEventListener('touchend', async function(event) {
     const touchEndX = event.changedTouches[0].clientX;
