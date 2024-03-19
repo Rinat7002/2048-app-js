@@ -73,6 +73,11 @@ document.addEventListener('touchstart', function(event) {
     touchStartY = event.touches[0].clientY;
 });
 
+document.addEventListener('touchmove', function(event) {
+    // Отменяем стандартное действие браузера, чтобы страница не прокручивалась
+    event.preventDefault();
+});
+
 document.addEventListener('touchend', function(event) {
     const touchEndX = event.changedTouches[0].clientX;
     const touchEndY = event.changedTouches[0].clientY;
