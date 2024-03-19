@@ -62,9 +62,6 @@ async function handleInput(event) {
 
 
 
-
-
-
 let touchStartX = 0;
 let touchStartY = 0;
 
@@ -78,7 +75,7 @@ document.addEventListener('touchmove', function(event) {
     event.preventDefault();
 });
 
-document.addEventListener('touchend', function(event) {
+document.addEventListener('touchend', async function(event) {
     const touchEndX = event.changedTouches[0].clientX;
     const touchEndY = event.changedTouches[0].clientY;
     
@@ -114,12 +111,18 @@ document.addEventListener('touchend', function(event) {
             moveUp();
         }
     }
+
+    const newTile = new Tile(gameBoard);
+    grid.getRandomEmptyCell().linkTile(newTile);
+
+    if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
+        await newTile.waitForAnimationEnd();
+        alert("Try again!");
+        return;
+    }
+
+    setupInputOnce();
 });
-
-
-
-
-
 
 
 async function moveUp() {
