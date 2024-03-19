@@ -59,6 +59,64 @@ async function handleInput(event) {
     setupInputOnce();
 }
 
+
+
+
+
+
+
+let touchStartX = 0;
+let touchStartY = 0;
+
+document.addEventListener('touchstart', function(event) {
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+});
+
+document.addEventListener('touchend', function(event) {
+    const touchEndX = event.changedTouches[0].clientX;
+    const touchEndY = event.changedTouches[0].clientY;
+    
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX > 0) {
+            if (!canMoveRight()) {
+                setupInputOnce();
+                return;
+            }
+            moveRight();
+        } else {
+            if (!canMoveLeft()) {
+                setupInputOnce();
+                return;
+            }
+            moveLeft();
+        }
+    } else {
+        if (deltaY > 0) {
+            if (!canMoveDown()) {
+                setupInputOnce();
+                return;
+            }
+            moveDown();
+        } else {
+            if (!canMoveUp()) {
+                setupInputOnce();
+                return;
+            }
+            moveUp();
+        }
+    }
+});
+
+
+
+
+
+
+
 async function moveUp() {
     await slideTiles(grid.cellsGroupedByColumn);
 }
